@@ -4,7 +4,6 @@
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
   "scripts": {
-    "deploy": "gh-pages -d dist-prod",
     "init": "webpack --progress --config webpack.dev.config.js",
     "dev": "webpack-dev-server   --inline --hot --compress --history-api-fallback  --config webpack.dev.config.js",
     "build:style": "gulp --gulpfile build-style.js",
