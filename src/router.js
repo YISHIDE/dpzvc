@@ -1,8 +1,6 @@
 /**
  * Created by lcfevr on 16/8/22.
  */
-
-
 const routers = [
     {
         path:'/',

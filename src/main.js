@@ -59,7 +59,6 @@ let router = new VueRouter({
 router.beforeEach((to,from,next) => {
     // let title = to.meta.title || Config.doc_title;
     // setPageTitle(title);
-
     window.scrollTo(0, 0);
     next();
 });
