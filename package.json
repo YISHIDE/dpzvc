@@ -1,6 +1,6 @@
 {
   "name": "dpzvc-ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
   "scripts": {
