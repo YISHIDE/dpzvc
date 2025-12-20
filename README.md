@@ -93,7 +93,7 @@ Vue.prototype.$Indicator.show()
 ---
 
 ## 六、目录结构（dist 打包示例）
-
+```bash
 dist/
  └── styles/
       ├── dpzvc.css               # 全量 CSS
@@ -108,6 +108,7 @@ dist/
       └── utils/
             ├── mixins.css
             └── ...
+```            
 ---            
 
 ## 七、开发和调试
