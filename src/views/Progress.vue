@@ -1,12 +1,12 @@
 <template>
     <div class="Progress">
-        <Progress v-model="progress" :barHeight="barHeight"></Progress>
+        <DpProgress v-model="progress" :barHeight="barHeight"></DpProgress>
     </div>
 </template>
 
 <script>
     export default {
-        name: "progress",
+        name: "dp-progress",
         data(){
             return {
                 progress:0,

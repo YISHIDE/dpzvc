@@ -1,50 +1,58 @@
-var path = require('path');
-var webpack = require('webpack');
-var merge = require('webpack-merge');
-var webpackBaseConfig = require('./webpack.base.config.js');
+/**
+ * webpack.dist.prod.config.js
+ * 生产环境打包库文件 (Webpack 5)
+ */
+
+const path = require('path');
+const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const { merge } = require('webpack-merge');
+const webpackBaseConfig = require('./webpack.base.config.js');
 
 process.env.NODE_ENV = 'production';
 
 module.exports = merge(webpackBaseConfig, {
-    entry: {
-        main: './src/index.js'
-    },
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'dpzvc.min.js',
-        library: 'dpzvc',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    },
-    externals: {
+  mode: 'production',
 
-        vue: {
-            root: 'Vue',
-            commonjs: 'vue',
-            commonjs2: 'vue',
-            amd: 'vue'
-        }
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
-        }),
-        new webpack.LoaderOptionsPlugin({
-            // test: /\.xxx$/, // may apply this only for some modules
-            options: {
-                babel:{
-                    presets: ['es2015','stage-0'],
-                    plugins: ['transform-runtime']
-                }
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_debugger: true,
-                drop_console: true
-            }
-        })
-    ]
+  entry: {
+    main: path.resolve(__dirname, './src/index.js')
+  },
+
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/dist/',
+    filename: 'dpzvc.min.js',
+    library: 'dpzvc',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+    clean: false // webpack5 新增，每次构建清理旧文件
+  },
+
+  externals: {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue'
+    }
+  },
+
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: { drop_console: true, drop_debugger: true },
+          output: { comments: false },
+        },
+        extractComments: false, // 防止生成 LICENSE.txt
+      })
+    ],
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  ]
 });

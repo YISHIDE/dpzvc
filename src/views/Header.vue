@@ -1,18 +1,18 @@
 <template>
     <div class="Header">
         <div class="item">
-        <Header title="Header" :fixed="fixed"></Header>
+        <DpHeader title="Header" :fixed="fixed"></DpHeader>
         </div>
         <div class="item">
-            <Header title="Header" :fixed="fixed">
+            <DpHeader title="Header" :fixed="fixed">
                 <span slot="right" @click="share">分享</span>
-            </Header>
+            </DpHeader>
         </div>
         <div class="item">
-        <Header title="Header" :fixed="fixed">
+        <DpHeader title="Header" :fixed="fixed">
             <span slot="left">返回</span>
             <span slot="right" @click="share">分享</span>
-        </Header>
+        </DpHeader>
         </div>
     </div>
 </template>
@@ -20,7 +20,7 @@
 <script>
 
     export default {
-        name: "header",
+        name: "dp-header",
 
         data(){
             return {

@@ -1,5 +1,5 @@
 
-<style rel="stylesheet/less" lang="less">
+<style lang="less">
     // @import '../styles/common.css';
 
     // @import '../../src/styles/index';

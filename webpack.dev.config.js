@@ -1,67 +1,40 @@
-/**
- * 本地预览
- */
+const path = require('path');
+const { merge } = require('webpack-merge');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const baseConfig = require('./webpack.base.config.js');
 
-var path = require('path');
-var fs = require('fs');
-var webpack = require('webpack');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var merge = require('webpack-merge');
-var webpackBaseConfig = require('./webpack.base.config.js');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-
-
-process.env.NODE_ENV = '"development"'
-module.exports = merge(webpackBaseConfig, {
-    // 入口
-    entry: {
-        main: './src/main',
-        vendors: ['vue', 'vue-router']
-    },
-    // 输出
-    output: {
-        path:path.join(__dirname, './example'),
-        publicPath: '',
-        filename: '[name].js',
-        chunkFilename: '[name].chunk.js'
-    },
-    resolve: {
-        alias: {
-            dpzvc: './src/index',
-            vue: 'vue/dist/vue.js'
-        }
-    },
-    plugins: [
-
-        new webpack.DefinePlugin({
-                'process.env.NODE_ENV': process.env.NODE_ENV,
-        }),
-        new ExtractTextPlugin({ filename: '[name].css', disable: true, allChunks: true }),
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendor.bundle.js' }),
-        new webpack.LoaderOptionsPlugin({
-            // test: /\.xxx$/, // may apply this only for some modules
-            options: {
-                babel:{
-                    presets: ['es2015','stage-0'],
-                    plugins: ['transform-runtime']
-                }
-            }
-        }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            filename: '../example/index.html',
-            template: './src/template/index.ejs'
-        }),
-        new FriendlyErrorsPlugin()
-    ],
-    devServer:{
-        contentBase:"./",
-        // host:"192.168.1.101",
-        // host:"192.168.0.131",
-         host:"localhost",
-        port:"3000"
-    }
+module.exports = merge(baseConfig, {
+  mode: 'development',
+  entry: {
+    main: path.resolve(__dirname, 'src/main.js'),
+    vendors: ['vue', 'vue-router']
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist-dev'),
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    publicPath: '/',
+  },
+  devtool: 'eval-source-map',
+  devServer: {
+    static: { directory: path.resolve(__dirname, 'dist-dev') },
+    compress: true,
+    hot: true,
+    historyApiFallback: true,
+    port: 3000
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname,'src/template/index.ejs'),
+      inject: true,
+      filename: 'index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[name].chunk.css'
+    })
+  ]
 });
-

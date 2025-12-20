@@ -7,7 +7,7 @@
 
 .dpzvc-nowrap(@n, @i: 1) when (@i <=@n) {
   .dpzvc-nowrap-@{i} {
-    .dpzvc-nowrap;
+    .dpzvc-nowrap();
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: @i;

@@ -1,72 +1,43 @@
-/**
- * 本地预览
- */
+const path = require('path');
+const { merge } = require('webpack-merge');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const baseConfig = require('./webpack.base.config.js');
 
-var path = require('path');
-var fs = require('fs');
-var webpack = require('webpack');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var merge = require('webpack-merge');
-var webpackBaseConfig = require('./webpack.base.config.js');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+process.env.NODE_ENV = 'production';
 
-
-process.env.NODE_ENV = '"production"'
-module.exports = merge(webpackBaseConfig, {
-    // 入口
-    entry: {
-        main: './src/main',
-        vendors: ['vue', 'vue-router']
-    },
-    // 输出
-    output: {
-        path:path.join(__dirname, './dist-prod'),
-        publicPath: '',
-        filename: '[name].js',
-        chunkFilename: '[name].chunk.js'
-    },
-    resolve: {
-        alias: {
-            dpzvc: './src/index',
-            vue: 'vue/dist/vue.js'
-        }
-    },
-    plugins: [
-
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': process.env.NODE_ENV,
-        }),
-        // new ExtractTextPlugin({ filename: '[name].css', disable: true, allChunks: true }),
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendor.bundle.js' }),
-        new webpack.LoaderOptionsPlugin({
-            // test: /\.xxx$/, // may apply this only for some modules
-            options: {
-                babel:{
-                    presets: ['es2015','stage-0'],
-                    plugins: ['transform-runtime']
-                }
-            }
-        }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            filename: '../dist-prod/index.html',
-            template: './src/template/index.ejs'
-        }),
-
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_debugger: true,
-                drop_console: true
-            },
-            output: { // 删除打包后的注释
-                comments: false
-            }
-        }),
-
-        new FriendlyErrorsPlugin()
-    ]
+module.exports = merge(baseConfig, {
+  mode: 'production',
+  entry: {
+    main: './src/main.js',
+    vendors: ['vue', 'vue-router']
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist-prod'),
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[name].[contenthash].chunk.js',
+    publicPath: ''
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/template/index.ejs',
+      filename: 'index.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true
+      }
+    })
+  ]
 });
-

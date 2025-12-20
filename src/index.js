@@ -2,7 +2,7 @@
  * Created by admin on 2017/5/15.
  */
 
-import VButton from '@/button'
+import VButton from './components/button'
 import CheckBox from './components/checkBox'
 import Header from './components/Header'
 import Message from './components/message'
@@ -15,7 +15,7 @@ import Prompt from './components/prompt'
 import SlideBar from './components/slideBar'
 import TextBar from './components/Text'
 import Upload from './components/upload'
-import ActionSheet from '@/action-sheet'
+import ActionSheet from './components/action-sheet'
 import SwitchBar from './components/switchbar'
 import Rater from './components/rater'
 import Spinner from './components/spinner'
@@ -36,7 +36,7 @@ const dpzvc = {
     CheckBoxGroup:CheckBox.group,
     Radio,
     RadioGroup:Radio.group,
-    Header,
+    DpHeader:Header,
     Message,
     Modal,
     Prompt,
@@ -54,7 +54,7 @@ const dpzvc = {
     LoadMore,
     Popup,
     Indicator,
-    Progress,
+    DpProgress:Progress,
     ToTop,
     Cell,
     CellSwipe,
@@ -80,4 +80,5 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
 
-module.exports = Object.assign(dpzvc, {install});
+const exportObj = Object.assign(dpzvc, {install});
+export default exportObj;

@@ -10,7 +10,8 @@
 <script>
 
     import EXIF from 'exif-js'
-    import MegaPixImage from '../../lib/MegaPixImage'
+    // import MegaPixImage from '../../lib/MegaPixImage'
+    import * as MegaPixImage from '../../lib/MegaPixImage';
     import { JPEG } from '../../utils/util'
     const prefixCls = 'dpzvc-upload';
     export default {

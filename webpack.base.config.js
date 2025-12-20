@@ -1,74 +1,81 @@
-/**
- * 公共配置
- */
-var path = require('path');
-function resolve (dir) {
-    return path.join(__dirname, '.', dir)
-}
+const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
-    // 加载器
-    module: {
-        // https://doc.webpack-china.org/guides/migrating/#module-loaders-module-rules
-        rules: [
-            {
-                // https://vue-loader.vuejs.org/en/configurations/extract-css.html
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        css: 'vue-style-loader!css-loader',
-                        less: 'vue-style-loader!css-loader!less-loader'
-                    },
-                    postLoaders: {
-                        html: 'babel-loader'
-                    }
-                }
-            },
-            {
-                test: /\.js$/,
-                query:{
-                    presets: ['es2015','stage-0']
-                },
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'autoprefixer-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'less-loader'
-                ]
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader?sourceMap'
-                ]
-            },
-            { test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=8192'},
-            { test: /\.(html|tpl)$/, loader: 'html-loader' }
-        ]
-    },
-
-
-
-    resolve: {
-        extensions: ['.js', '.vue'],
-        alias: {
-            'vue': 'vue/dist/vue.esm.js',
-            '@': resolve('src/components')
-        }
+  entry: {
+    main: path.resolve(__dirname, 'src/main.js')
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash:8].js', // webpack5 推荐使用 contenthash
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, 'src')
     }
+  },
+  module: {
+    rules: [
+      // Vue 文件
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      // JS 文件
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
+      // CSS 文件
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          'postcss-loader'
+        ]
+      },
+      // LESS 文件
+      {
+        test: /\.less$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
+          },
+          'postcss-loader',
+          'less-loader'
+        ]
+      },
+      // 图片、字体等资源
+      {
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff2?)$/,
+        type: 'asset', // webpack5 新资源模块
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 10kb
+          }
+        },
+        generator: {
+          filename: 'assets/[name].[hash:7][ext]'
+        }
+      }
+    ]
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
+  devtool: 'source-map'
 };

@@ -1,76 +1,34 @@
-/**
- * Created by yishide .
- */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './components/app.vue';
 import Routers from './router';
+import Config from './config/config';
+import dpzvc from './index';
 
-import Config from './config/config'
-// import Modal from './components/modal/index'
-// import Prompt from './components/prompt/index'
-
-
-// import Message from './components/message/index'
-
-import dpzvc from './index'
-
-Vue.use(dpzvc)
-
-
-    // var log = console.log;
-    // console.log = function () {
-    //     var args = Array.from(arguments);
-    //     args = args.map(arg => {
-    //         try {
-    //             return JSON.parse(JSON.stringify(arg));
-    //         } catch (e) {
-    //             return arg;
-    //         }
-    //     });
-    //
-    //     log.apply(console, args);
-    // };
-    //
-    // window.vConsole = require('./vconsole.min');
-    // require('./vconsole-resources.min');
-    // require('./vconsole-sources.min');
-
+// 安装自定义组件库
+Vue.use(dpzvc);
 
 Vue.use(VueRouter);
-// Vue.use(VueTouch);
 
-
-// 开启debug模式
-
-
+// 配置全局变量
 Vue.prototype.$Config = Config;
 
-
-let EventBus = new Vue();
-// 路由配置
-let router = new VueRouter({
-
-    history: process.env.NODE_ENV != 'production',
-    routes:Routers
-});
-
-
-router.beforeEach((to,from,next) => {
-    // let title = to.meta.title || Config.doc_title;
-    // setPageTitle(title);
-    window.scrollTo(0, 0);
-    next();
-});
-
-router.afterEach(() => {
-
-});
-
+// 创建全局事件总线
 window.EventBus = new Vue();
 
+// 路由配置
+const router = new VueRouter({
+  mode: process.env.NODE_ENV !== 'production' ? 'hash' : 'history', // VueRouter 3 兼容写法
+  routes: Routers
+});
+
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  next();
+});
+// 根实例
 new Vue({
-    el: '#app',
-    router: router,
-    render: h => h(App)
-})
+  el: '#app',
+  router,
+  render: h => h(App)
+});
