@@ -1,52 +1,43 @@
 /**
- * Created by admin on 2017/5/8.
+ * messageGroup.js
+ * 兼容 Vue 2.7 runtime-only 构建
  */
 
-import MessageGroup from './messageGroup.vue'
 import Vue from 'vue';
-import {camelcaseToHyphen} from '../../utils/util'
+import MessageGroup from './messageGroup.vue'; // 你的 Vue 组件
+import { camelcaseToHyphen } from '../../utils/util';
 
-MessageGroup.newInstance = function (props) {
+MessageGroup.newInstance = function (props = {}) {
+  const div = document.createElement('div');
+  document.body.appendChild(div);
 
-    let _props = props || {};
-
-    let _prop = '';
-    Object.keys(_props).forEach((prop) => {
-
-        _prop += ' :' + camelcaseToHyphen(prop) + '=' + prop
-    });
-
-    let div = document.createElement('div');
-
-    document.body.appendChild(div);
-
-    let message = new Vue({
-        el: div,
-        data: _props,
-        template:`<Message-group ${_prop} ></Message-group>`,
-        components: {MessageGroup},
-    }).$children[0];
-
-
-    return {
-
-        add(props){
-            message.add(props)
-        },
-        remove(props) {
-
-            message.remove(props)
-        },
-        component: message,
-        destroy(){
-            message.closeAll();
-
-            setTimeout(()=>{
-                document.body.removeChild(document.getElementsByClassName('dpzvc-message')[0].parentElement)
-            },500)
-
-        }
+  // 使用 render 函数代替 template，兼容 runtime-only
+  const messageVm = new Vue({
+    data() {
+      return { ...props };
+    },
+    render(h) {
+      return h(MessageGroup, { props });
     }
-}
+  }).$mount(div);
 
-export default  MessageGroup;
+  const instance = messageVm.$children[0]; // 确保实例存在
+
+  return {
+    add(options) {
+      if (instance) instance.add(options);
+    },
+    remove(options) {
+      if (instance) instance.remove(options);
+    },
+    component: instance,
+    destroy() {
+      if (instance) instance.closeAll();
+      setTimeout(() => {
+        if (div.parentNode) div.parentNode.removeChild(div);
+      }, 500);
+    }
+  };
+};
+
+export default MessageGroup;
