@@ -18,7 +18,7 @@ window.EventBus = new Vue();
 
 // 路由配置
 const router = new VueRouter({
-  mode: process.env.NODE_ENV !== 'production' ? 'hash' : 'history', // VueRouter 3 兼容写法
+  mode: process.env.NODE_ENV !== 'production' ? 'hash' : 'hash', // VueRouter 3 兼容写法
   routes: Routers
 });
 
