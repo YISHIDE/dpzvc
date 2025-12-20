@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yishide/dpzvc.git"
+    "url": "https://github.com/yishide/dpzvc.git"
   },
   "keywords": [
     "Vue",
