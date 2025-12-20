@@ -1,4 +1,7 @@
-html,body{
+@import "../base/variable.less";
+
+html,
+body {
   font-family: @FontFamily;
   font-size: @FontSizeBase;
   color: @TxtColor;
@@ -8,45 +11,106 @@ html,body{
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
 }
-body, div, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, textarea, select, button, p, a, img, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+
+body,
+div,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select,
+button,
+p,
+a,
+img,
+table,
+th,
+tr,
+td,
+tbody,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   border-width: thin;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-em, i {
+
+em,
+i {
   font-style: normal;
 }
+
 strong {
   font-weight: normal;
 }
-a, a:hover {
+
+a,
+a:hover {
   color: inherit;
   -webkit-touch-callout: none;
   text-decoration: none;
 }
-ul, ol {
+
+ul,
+ol {
   list-style: none;
 }
-h1 ,h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: 100%;
   font-weight: normal;
 }
-fieldset, img {
+
+fieldset,
+img {
   border: none;
 }
+
 img {
   max-width: 100%;
   height: auto;
-  width:auto\9;
+  width: auto\9;
   -ms-interpolation-mode: bicubic;
 }
-input, textarea, select, button {
+
+input,
+textarea,
+select,
+button {
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -55,15 +119,17 @@ input, textarea, select, button {
   -webkit-appearance: none;
   background: none;
 }
+
 textarea {
   resize: none;
 }
+
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   opacity: 0;
 }
+
 :focus {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
-

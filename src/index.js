@@ -1,6 +1,8 @@
 /**
- * Created by admin on 2017/5/15.
+ * Created by admin on 2025/12/15.
  */
+
+/* ========= 组件引入（保持你原有结构） ========= */
 
 import VButton from './components/button'
 import CheckBox from './components/checkBox'
@@ -29,56 +31,119 @@ import CellSwipe from './components/cell-swipe'
 import Badge from './components/badge'
 import Card from './components/card'
 
-const dpzvc = {
+/* ========= 组件集合（用于全量注册） ========= */
 
-    VButton,
-    CheckBox,
-    CheckBoxGroup:CheckBox.group,
-    Radio,
-    RadioGroup:Radio.group,
-    DpHeader:Header,
-    Message,
-    Modal,
-    Prompt,
-    Picker,
-    Swipe,
-    Tab,
-    SlideBar,
-    TextBar,
-    Number:TextBar.Number,
-    Upload,
-    ActionSheet,
-    SwitchBar,
-    Rater,
-    Spinner,
-    LoadMore,
-    Popup,
-    Indicator,
-    DpProgress:Progress,
-    ToTop,
-    Cell,
-    CellSwipe,
-    Badge,
-    Card
-};
-
-const install = (Vue,options)=>{
-
-    Object.keys(dpzvc).forEach((key)=>{
-        Vue.component(key,dpzvc[key])
-    });
-
-
-    Vue.prototype.$Message = Message;
-    Vue.prototype.$Modal = Modal;
-    Vue.prototype.$Prompt = Prompt;
-    Vue.prototype.$Indicator = Indicator
-
+const components = {
+  VButton,
+  CheckBox,
+  CheckBoxGroup: CheckBox.group,
+  Radio,
+  RadioGroup: Radio.group,
+  DpHeader: Header,
+  Picker,
+  Swipe,
+  Tab,
+  SlideBar,
+  TextBar,
+  Number: TextBar.Number,
+  Upload,
+  ActionSheet,
+  SwitchBar,
+  Rater,
+  Spinner,
+  LoadMore,
+  Popup,
+  DpProgress: Progress,
+  ToTop,
+  Cell,
+  CellSwipe,
+  Badge,
+  Card
 }
+
+/* ========= 服务组件 ========= */
+
+const services = {
+  Message,
+  Modal,
+  Prompt,
+  Indicator
+}
+
+/* ========= 给“单个组件”补 install（关键） ========= */
+
+Object.keys(components).forEach(key => {
+  const component = components[key]
+  if (!component.install) {
+    component.install = function (Vue) {
+      Vue.component(key, component)
+    }
+  }
+})
+
+Object.keys(services).forEach(key => {
+  const service = services[key]
+  if (!service.install) {
+    service.install = function (Vue) {
+      Vue.prototype[`$${key}`] = service
+    }
+  }
+})
+
+/* ========= 全量 install ========= */
+
+const install = function (Vue) {
+  if (install.installed) return
+  install.installed = true
+
+  // 注册组件
+  Object.keys(components).forEach(key => {
+    Vue.component(key, components[key])
+  })
+
+  // 注册服务
+  Object.keys(services).forEach(key => {
+    Vue.prototype[`$${key}`] = services[key]
+  })
+}
+
+/* ========= 自动安装（script 方式） ========= */
 
 if (typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
+  install(window.Vue)
 }
 
-const exportObj = Object.assign(dpzvc, {install});
-export default exportObj;
+/* ========= 按需导出 + 默认导出 ========= */
+
+export {
+  VButton,
+  CheckBox,
+  Header,
+  Message,
+  Modal,
+  Prompt,
+  Picker,
+  Radio,
+  Swipe,
+  Tab,
+  SlideBar,
+  TextBar,
+  Upload,
+  ActionSheet,
+  SwitchBar,
+  Rater,
+  Spinner,
+  LoadMore,
+  Popup,
+  Indicator,
+  Progress,
+  ToTop,
+  Cell,
+  CellSwipe,
+  Badge,
+  Card
+}
+
+export default {
+  install
+}
