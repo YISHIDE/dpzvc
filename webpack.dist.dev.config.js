@@ -1,8 +1,3 @@
-/**
- * webpack.dist.dev.config.js
- * 开发环境打包库文件 (Webpack 5)
- */
-
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
@@ -10,7 +5,7 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 
 process.env.NODE_ENV = 'production';
 
-module.exports = merge(webpackBaseConfig, {
+module.exports =[merge(webpackBaseConfig, {
   mode: 'production',
 
   entry: {
@@ -46,4 +41,39 @@ module.exports = merge(webpackBaseConfig, {
   optimization: {
     minimize: false, // 开发库打包通常不压缩
   },
-});
+}),
+merge(webpackBaseConfig, {
+  mode: 'production',
+
+  entry: {
+    main: path.resolve(__dirname, './src/index.js')
+  },
+
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'dpzvc.esm.js',  // 改名，标识 ESM
+    library: {
+      type: 'module'           // ✅ 核心改动
+    },
+    clean: false
+  },
+
+  experiments: {
+    outputModule: true           // ✅ 必须
+  },
+
+  externals: {
+    vue: 'vue'
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  ],
+
+  optimization: {
+    concatenateModules: false,
+    minimize: false
+  }
+})];

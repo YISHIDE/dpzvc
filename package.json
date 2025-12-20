@@ -1,8 +1,9 @@
 {
   "name": "dpzvc-ui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
+  "module": "dist/dpzvc.esm.js",
   "scripts": {
     "init": "webpack --progress --config webpack.dev.config.js",
     "dev": "webpack serve --config webpack.dev.config.js --open",

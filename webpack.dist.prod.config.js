@@ -1,8 +1,3 @@
-/**
- * webpack.dist.prod.config.js
- * 生产环境打包库文件 (Webpack 5)
- */
-
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -11,7 +6,43 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 
 process.env.NODE_ENV = 'production';
 
-module.exports = merge(webpackBaseConfig, {
+module.exports =[
+  // -------- UMD 输出 --------
+  merge(webpackBaseConfig, {
+    mode: 'production',
+    entry: {
+      main: path.resolve(__dirname, './src/index.js')
+    },
+    output: {
+      path: path.resolve(__dirname, './dist'),
+      filename: 'dpzvc.min.js',
+      library: 'dpzvc',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
+      clean: false
+    },
+    externals: {
+      vue: 'Vue'
+    },
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: { drop_console: true, drop_debugger: true },
+            output: { comments: false }
+          },
+          extractComments: false
+        })
+      ]
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      })
+    ]
+  }),
+  merge(webpackBaseConfig, {
   mode: 'production',
 
   entry: {
@@ -20,34 +51,33 @@ module.exports = merge(webpackBaseConfig, {
 
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'dpzvc.min.js',
-    library: 'dpzvc',
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
-    clean: false // webpack5 新增，每次构建清理旧文件
+    filename: 'dpzvc.esm.min.js',       // ESM 文件
+    library: {
+      type: 'module'                // 核心 ESM 输出
+    },
+    clean: false
+  },
+
+  experiments: {
+    outputModule: true
   },
 
   externals: {
-    vue: {
-      root: 'Vue',
-      commonjs: 'vue',
-      commonjs2: 'vue',
-      amd: 'vue'
-    }
+    vue: 'vue'
   },
 
   optimization: {
+    concatenateModules: false,
     minimize: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
           compress: { drop_console: true, drop_debugger: true },
-          output: { comments: false },
+          output: { comments: false }
         },
-        extractComments: false, // 防止生成 LICENSE.txt
+        extractComments: false
       })
-    ],
+    ]
   },
 
   plugins: [
@@ -55,4 +85,4 @@ module.exports = merge(webpackBaseConfig, {
       'process.env.NODE_ENV': JSON.stringify('production')
     })
   ]
-});
+})];
