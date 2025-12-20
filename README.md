@@ -10,7 +10,12 @@
 
 ```bash
 npm install dpzvc-ui
-三、全量使用
+---
+
+
+## 三、全量使用
+
+```bash
 
 全量引入组件库，包括 JS 组件和全量 CSS 样式（适合小型项目或快速开发）。
 
@@ -27,7 +32,11 @@ Vue.use(Dpzvc)
 @import "~dpzvc-ui/dist/styles/dpzvc.css";
 
 此方式会包含 components、base、utils 下的全部样式。
-四、按需使用
+---
+
+## 四、按需使用
+
+```bash
 
 按需引入可以减小打包体积，只引入你需要的组件及样式。
 
@@ -45,7 +54,11 @@ Vue.component('VBadge', VBadge)
 @import "~dpzvc-ui/dist/styles/base/reset.css";
 @import "~dpzvc-ui/dist/styles/utils/mixins.css";
 注意：按需引入组件时，如果组件依赖变量或 mixin，需要保证 base / utils 样式已引入。
-五、服务组件使用
+
+---
+
+## 五、服务组件使用
+```bash
 
 dpzvc-ui 提供一些 服务组件，无需注册即可使用，如：
 	•	Message
@@ -65,7 +78,11 @@ Vue.prototype.$Modal.alert('提示信息')
 Vue.prototype.$Prompt('请输入内容')
 Vue.prototype.$Indicator.show()   
 
-六、目录结构（dist 打包示例）
+---
+
+## 六、目录结构（dist 打包示例）
+```bash
+
 dist/
  └── styles/
       ├── dpzvc.css               # 全量 CSS
@@ -79,16 +96,19 @@ dist/
       │     └── ...
       └── utils/
             ├── mixins.css
-            ├── helpers.css
             └── ...
-七、开发和调试
+---            
+
+## 七、开发和调试
+```bash
 	开发组件请放在 src/components
 	•	公共变量、样式放在 src/styles/base
 	•	工具 mixin 放在 src/styles/utils
 	•	组件样式放在 src/styles/components
 	•	Gulp 任务已支持按需打包和全量打包
-
-八、注意事项
+---
+## 八、注意事项
+```bash
 	1.	按需引入组件时，请确保 依赖的 base / utils 样式 已引入，否则可能出现变量未定义的错误。
 	2.	服务组件如 Message、Modal 等无需单独注册，全局可直接使用。
 	3.	全量引入适合快速开发，但会增加打包体积；按需引入可减小体积，推荐生产环境使用。
@@ -97,21 +117,3 @@ dist/
 
 现在可以开始在项目中愉快地使用 dpzvc-ui 组件库了 🎉
 ---
-
-这份文档 **可以直接复制粘贴一次性使用**，包括了：
-
-- 组件库说明  
-- 安装方式  
-- 全量引入方式  
-- 按需引入方式  
-- 公共样式引入  
-- 服务组件使用  
-- dist 目录结构示例  
-- 开发调试说明  
-- 注意事项  
-
----
-
-如果你需要，我可以再帮你加一节 **所有组件列表 + props/事件示例表格**，这样文档就完整像官方库一样了。  
-
-你希望我帮你加吗？
