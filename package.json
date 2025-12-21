@@ -1,6 +1,6 @@
 {
   "name": "dpzvc-ui",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
   "module": "dist/dpzvc.esm.js",

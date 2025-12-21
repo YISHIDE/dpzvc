@@ -2,11 +2,18 @@
 
 ## 一、说明
 
-> 一套基于 **Vue 2.X** 的通用组件库，提供丰富 UI 组件，并支持 **全量引入** 和 **按需引入**，同时提供公共样式、基础工具样式和服务组件方法（如 Message、Modal、Indicator）。
+> 一套基于 **Vue 2.X** 的h5移动端通用组件库，提供丰富 UI 组件，并支持 **全量引入** 和 **按需引入**，同时提供公共样式、基础工具样式和服务组件方法（如 Message、Modal、Indicator）。
+后续会开发基于Vue3版本的移动端组件库升级，敬请期待
 
 ---
 
-## 二、安装
+## 二、组件库预览地址（查看各个组件库的使用效果）
+```bash
+   https://yishide.github.io/dpzvc/#/guide
+```
+---
+
+## 三、安装
 
 ```bash
 npm install dpzvc-ui
@@ -15,7 +22,7 @@ npm install dpzvc-ui
 ---
 
 
-## 三、全量使用
+## 四、全量使用
 
 
 全量引入组件库，包括 JS 组件和全量 CSS 样式（适合小型项目或快速开发）。
@@ -39,7 +46,7 @@ Vue.use(Dpzvc)
 此方式会包含 components、base、utils 下的全部样式。
 ---
 
-## 四、按需使用
+## 五、按需使用
 
 按需引入可以减小打包体积，只引入你需要的组件及样式。
 
@@ -70,7 +77,7 @@ Vue.component('Badge', Badge)
 
 ---
 
-## 五、服务组件使用
+## 六、服务组件使用
 
 dpzvc-ui 提供一些 服务组件，无需注册即可使用，如：
 	•	Message
@@ -95,7 +102,7 @@ Vue.prototype.$Indicator.blade()
 
 ---
 
-## 六、目录结构（dist 打包示例）
+## 七、目录结构（dist 打包示例）
 ```bash
 dist/
  └── styles/
@@ -114,14 +121,14 @@ dist/
 ```            
 ---            
 
-## 七、开发和调试
+## 八、开发和调试
 	开发组件请放在 src/components
 	•	公共变量、样式放在 src/styles/base
 	•	工具 mixin 放在 src/styles/utils
 	•	组件样式放在 src/styles/components
 	•	Gulp 任务已支持按需打包和全量打包
 ---
-## 八、注意事项
+## 九、注意事项
 
 	1.	按需引入组件时，请确保 依赖的 base / utils 样式 已引入，否则可能出现变量未定义的错误。
 	2.	服务组件如 Message、Modal 等无需单独注册，全局可直接使用。
