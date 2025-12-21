@@ -1,6 +1,6 @@
 {
   "name": "dpzvc-ui",
-  "version": "1.2.8",
+  "version": "1.2.10",
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
   "module": "dist/dpzvc.esm.js",
@@ -19,7 +19,8 @@
   },
   "keywords": [
     "Vue",
-    "Vue 2.x",
+    "Vue 2.7 Cli",
+    "Webpack5",
     "dpzvc",
     "UI",
     "Components"
