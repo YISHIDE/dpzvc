@@ -1,161 +1,114 @@
 /**
- * Created by admin on 2017/3/30.
+ * confirm.js - 适配 Vue 2.7 runtime-only
  */
-import Modal from './modal.vue'
-import VButton from '../button'
-import Vue from 'vue'
-
-import { camelcaseToHyphen } from '../../utils/util'
+import Vue from 'vue';
+import Modal from './modal.vue';
+import VButton from '../button';
+import { camelcaseToHyphen } from '../../utils/util';
 
 const prefixCls = 'dpzvc-modal';
 
-Modal.newInstance = properties =>{
+Modal.newInstance = function(properties = {}) {
+  // 创建一个新的 Vue 构造函数
+  const ModalConstructor = Vue.extend({
+    components: { Modal, VButton },
+    data() {
+      return Object.assign({
+        visible: false,
+        width: '70%',
+        body: '',
+        title: '',
+        okText: '确定',
+        cancleText: '取消',
+        loading: false,
+        buttonLoading: false,
+        showCancle: true,
+        showHead: true,
+        onOk: () => {},
+        onCancle: () => {},
+        onRemove: () => {}
+      }, properties);
+    },
+    render(h) {
+      const footer = [
+        this.showCancle
+          ? h('v-button', { 
+              props: { type: 'primary', radius: false }, 
+              on: { click: this.cancle } 
+            }, this.cancleText)
+          : null,
+        h('v-button', { 
+          props: { type: 'normal', radius: false, loading: this.buttonLoading }, 
+          on: { click: this.ok } 
+        }, this.okText)
+      ];
 
-    let _props = properties || {};
-
-    let props = '';
-
-    Object.keys(_props).forEach( prop =>{
-
-        props += ' :'+camelcaseToHyphen(prop) + '=' + prop
-    })
-
-    const div = document.createElement('div');
-
-    document.body.appendChild(div);
-
-    const modal = new Vue({
-        el:div,
-        template:`<Modal ${props} v-model="visible" :width="width" >
-                        <div class="${prefixCls}-header-inner  ellipse-fir"  v-html="title" slot="header"></div>
-                        <div class="${prefixCls}-body-inner" v-html="body" slot="body"></div>
-                        <template slot="footer">
-                            <v-button type="primary" :radius="false" @click="cancle"  v-if="showCancle">{{cancleText}}</v-button>
-                             <v-button type="normal" :radius="false" @click="ok" :loading="buttonLoading">{{okText}}</v-button>
-                        </template>
-                    </Modal>`,
-        components:{
-            Modal,
-            VButton
+      return h(Modal, {
+        props: {
+          value: this.visible,
+          width: this.width,
+          showHead: this.showHead,
+          footerHide: false
         },
-        data:Object.assign(_props,{
-            visible:false,
-            width:'70%',
-            body:'',
-            title:'',
-            okText:'确定',
-            cancleText:'取消',
-            loading:false,
-            buttonLoading:false,
-            showCancle:true,
-            showHead:true,
-            onOk:function(){},
-            onCancle:function(){},
-            onRemove:function(){}
-        }),
-        methods:{
-            cancle(){
-                this.$children[0].visible = false;
-                this.onCancle();
-                this.remove()
-
-            },
-            ok(){
-                console.log('asd')
-                if (this.loading) {
-                    this.buttonLoading = true;
-                    this.$children[0].buttonLoading = true;
-                } else {
-                    this.visible = false;
-                    this.remove();
-                }
-
-                this.onOk()
-            },
-            remove(){
-                this.$children[0].visible = false;
-                setTimeout(()=>{
-                    this.destroy();
-                },300)
-            },
-            destroy(){
-
-                this.$destroy();
-                document.body.removeChild(this.$el);
-                this.onRemove()
-            },
-
-
-        },
-    }).$children[0];
-
-
-
-    return {
-
-        show(props){
-
-
-
-            // if ('width' in props) {
-            //     modal.$parent.width = props.width
-            // }
-            //
-            // if ('title' in props) {
-            //     modal.$parent.title = props.title
-            // }
-            //
-            // if ('showHead' in props) {
-            //     modal.$parent.showHead = props.showHead
-            // }
-            //
-            // if ('okText' in props) {
-            //     modal.$parent.okText = props.okText
-            // }
-            //
-            // if ('cancleText' in props) {
-            //     modal.$parent.cancleText = props.cancleText
-            // }
-            //
-            //
-            // if ('onCancle' in props) {
-            //     modal.$parent.onCancle = props.onCancle
-            // }
-            //
-            // if ('onOk' in props) {
-            //     modal.$parent.onOk = props.onOk
-            // }
-            //
-            // if ('loading' in props) {
-            //     modal.$parent.loading = props.loading
-            // }
-            //
-            // if ('body' in props) {
-            //     modal.$parent.body = props.body
-            // }
-
-            Object.keys(props).forEach((item)=>{
-                modal.$parent[item] = props[item]
-            })
-
-            modal.$parent.showCancle = props.showCancle;
-            modal.$parent.onRemove = props.onRemove;
-            modal.visible = true;
-
-
-        },
-        remove () {
-
-            modal.visible = false;
-            modal.$parent.buttonLoading = false;
-            modal.$parent.remove();
-
-        },
-        component:modal
-
+        on: {
+          'on-ok': this.ok,
+          'on-cancle': this.cancle
+        }
+      }, [
+        h('div', { slot: 'header', domProps: { innerHTML: this.title }, class: `${prefixCls}-header-inner ellipse-fir` }),
+        h('div', { slot: 'body', domProps: { innerHTML: this.body }, class: `${prefixCls}-body-inner` }),
+        h('template', { slot: 'footer' }, footer)
+      ]);
+    },
+    methods: {
+      cancle() {
+        this.visible = false;
+        this.onCancle();
+        this.remove();
+      },
+      ok() {
+        if (this.loading) {
+          this.buttonLoading = true;
+        } else {
+          this.visible = false;
+          this.remove();
+        }
+        this.onOk();
+      },
+      remove() {
+        this.visible = false;
+        setTimeout(() => this.destroy(), 300);
+      },
+      destroy() {
+        this.$destroy();
+        if (this.$el && this.$el.parentNode) {
+          this.$el.parentNode.removeChild(this.$el);
+        }
+        this.onRemove();
+      }
     }
-    };
+  });
 
+  // 实例化并挂载到 DOM
+  const div = document.createElement('div');
+  document.body.appendChild(div);
+  const instance = new ModalConstructor().$mount(div);
 
+  return {
+    show(props = {}) {
+      Object.keys(props).forEach(key => {
+        if (key in instance) {
+          instance[key] = props[key];
+        }
+      });
+      instance.visible = true;
+    },
+    remove() {
+      instance.remove();
+    },
+    component: instance
+  };
+};
 
-export default  Modal
+export default Modal;
+

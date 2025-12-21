@@ -1,153 +1,88 @@
 /**
- * Created by admin on 2017/6/22.
+ * Indicator - Vue 2.7 CLI 适配版
  */
-import Indicator from './Indicator'
-import {camelcaseToHyphen} from '../../utils/util'
+
 import Vue from 'vue'
-let instance;
+import Indicator from './Indicator.vue'
 
-Indicator.newInstance = properties => {
+let instance = null
 
-    let _props = properties || {};
+function createInstance(props = {}) {
+  const IndicatorConstructor = Vue.extend(Indicator)
 
-    let props = '';
-
-    Object.keys(_props).forEach(prop => {
-
-        props += ' :' + camelcaseToHyphen(prop) + '=' + prop
-    })
-
-    const div = document.createElement('div');
-
-    document.body.appendChild(div);
-
-    let indicator = new Vue({
-        el: div,
-        template: `<Indicator ${props} v-model="visible" ></Indicator>`,
-        components: {
-            Indicator
-        },
-        data: Object.assign(_props, {
-            visible: false,
-            size: 45,
-            type: 'snake',
-            color: '#ffffff',
-            text: '加载中...',
-            onRemove:function(){}
-
-        }),
-        methods: {
-            remove() {
-                this.$children[0].visible = false;
-                setTimeout(() => {
-                    this.destroy();
-                }, 300)
-            },
-            destroy(){
-
-                this.$destroy();
-
-                // if (!this.$el) return;
-                document.body.removeChild(this.$el);
-                this.onRemove()
-            }
-        }
-    }).$children[0];
-
-
-    return {
-        open(options){
-
-            indicator.$parent.visible = true;
-            indicator.$parent.onRemove = options.onRemove;
-
-
-            if ('size' in options) {
-                indicator.$parent.size = options.size;
-            }
-
-            if ('type' in options) {
-                indicator.$parent.type = options.type;
-            }
-
-            if ('color' in options) {
-                indicator.$parent.color = options.color;
-            }
-
-            if ('text' in options) {
-                indicator.$parent.text = options.text;
-            }
-
-        },
-
-        remove(){
-
-            indicator.visible = false;
-
-            indicator.$parent.remove()
-
-        },
-        component: indicator
+  const vm = new IndicatorConstructor({
+    propsData: {
+      size: 45,
+      type: 'snake',
+      color: '#ffffff',
+      text: '加载中...',
+      ...props
     }
-};
+  })
 
+  vm.$mount()
+  document.body.appendChild(vm.$el)
 
-function confirm(options) {
-    instance = instance || Indicator.newInstance({
-            size: 45,
-            color: '#ffffff',
-            text: '正在加载...',
-            type: 'snake'
-        });
+  vm.visible = false
 
-    options.onRemove = function () {
-        instance = null;
-    }
+  vm.$on('remove', () => {
+    destroyInstance()
+  })
 
-    instance.open(options)
-
+  return vm
 }
 
-
-Indicator.blade = function (props = {}) {
-
-    props.type = 'blade';
-    return confirm(props)
+function destroyInstance() {
+  if (!instance) return
+  instance.$destroy()
+  if (instance.$el && instance.$el.parentNode) {
+    instance.$el.parentNode.removeChild(instance.$el)
+  }
+  instance = null
 }
 
+function open(options = {}) {
+  if (!instance) {
+    instance = createInstance(options)
+  }
+
+  Object.keys(options).forEach(key => {
+    instance.$props[key] = options[key]
+  })
+
+  instance.visible = true
+}
+
+function close() {
+  if (!instance) return
+  instance.visible = false
+  destroyInstance()
+}
+
+/* ================== 对外 API ================== */
+
+Indicator.open = open
+
+Indicator.remove = close
 
 Indicator.snake = function (props = {}) {
+  props.type = 'snake'
+  open(props)
+}
 
-    props.type = 'snake';
-    return confirm(props)
+Indicator.blade = function (props = {}) {
+  props.type = 'blade'
+  open(props)
 }
 
 Indicator.circle = function (props = {}) {
-
-    props.type = 'fading-circle';
-    return confirm(props)
+  props.type = 'fading-circle'
+  open(props)
 }
 
 Indicator.bounce = function (props = {}) {
-
-    props.type = 'double-bounce';
-    return confirm(props)
+  props.type = 'double-bounce'
+  open(props)
 }
 
-Indicator.remove = function () {
-
-
-    if (!instance) return false;
-
-     instance = instance || Indicator.newInstance({
-            size: 45,
-            color: '#ffffff',
-            text: '正在加载...',
-            type: 'snake'
-        })
-
-    instance.remove()
-}
-
-
-export default  Indicator
+export default Indicator
