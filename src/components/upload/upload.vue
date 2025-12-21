@@ -9,8 +9,9 @@
 
 <script>
 
-    import EXIF from 'exif-js'
+    // import EXIF from '../../lib/exif-js'
     // import MegaPixImage from '../../lib/MegaPixImage'
+    import exifr from 'exifr';
     import MegaPixImage from '../../lib/MegaPixImage';
     import { JPEG } from '../../utils/util'
     const prefixCls = 'dpzvc-upload';
@@ -56,42 +57,81 @@
             },
 
             methods: {
+            async showPhoto(e) {
+                this.$Indicator.snake({ text: '上传中' });
+                this.files = [];
+                const fileList = e.target.files;
+                this.fileLength = fileList.length;
 
-                showPhoto(e){
-                    this.$Indicator.snake({text:'上传中'});
-                    this.files = [];
-                    let file = e.target.files;
-                    this.fileLength = file.length;
-                    let that = this;
-                    let Orientation = null;
+                for (let i = 0; i < fileList.length; i++) {
+                    const file = fileList[i];
 
-                    for (let i = 0; i < file.length; i++) {
+                    try {
+                    // 读取方向
+                    const Orientation = await exifr.orientation(file);
 
-                        EXIF.getData(file[i], function () {
-                            EXIF.getAllTags(this);
-                            Orientation = EXIF.getTag(this, 'Orientation');
+                    // 读取图片数据
+                    const dataURL = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = (err) => reject(err);
+                    });
 
-                        });
+                    const img = new Image();
+                    img.src = dataURL;
 
-                        let reader = new FileReader();
-                        reader.readAsDataURL(file[i]);
-
-                        reader.onload = function (e) {
-                            let img = new Image();
-                            img.src = e.target.result;
-
-                            img.onload = function (e) {
-
-                                that.create(img, Orientation);
-
-
-                            }
+                    await new Promise((resolve) => {
+                        img.onload = () => {
+                        // 调用你原来的 create 方法
+                        this.create(img, Orientation);
+                        resolve();
                         };
+                    });
+
+                    } catch (err) {
+                    console.error('读取图片或 EXIF 失败', err);
                     }
-                    e.target.value = '';
+                }
 
-
+                e.target.value = ''; // 清空选择框
                 },
+            //    showPhoto1(e){
+            //         this.$Indicator.snake({text:'上传中'});
+            //         this.files = [];
+            //         let file = e.target.files;
+            //         this.fileLength = file.length;
+            //         let that = this;
+            //         let Orientation = null;
+
+            //         for (let i = 0; i < file.length; i++) {
+
+            //             EXIF.getData(file[i], function () {
+            //                 EXIF.getAllTags(this);
+            //                 Orientation = EXIF.getTag(this, 'Orientation');
+
+            //             });
+                        
+
+            //             let reader = new FileReader();
+            //             reader.readAsDataURL(file[i]);
+
+            //             reader.onload = function (e) {
+            //                 let img = new Image();
+            //                 img.src = e.target.result;
+
+            //                 img.onload = function (e) {
+
+            //                     that.create(img, Orientation);
+
+
+            //                 }
+            //             };
+            //         }
+            //         e.target.value = '';
+
+
+            //     },
                 create(file, Orientation){
 
                     let _this = this;
