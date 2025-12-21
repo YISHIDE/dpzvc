@@ -46,10 +46,10 @@ Vue.use(Dpzvc)
 1. 引入组件
 ```bash
 import Vue from 'vue'
-import { VButton, VBadge } from 'dpzvc-ui'
+import { VButton, Badge } from 'dpzvc-ui'
 
 Vue.component('VButton', VButton)
-Vue.component('VBadge', VBadge)
+Vue.component('Badge', Badge)
 ```
 
 2. 引入组件 CSS
@@ -57,11 +57,14 @@ Vue.component('VBadge', VBadge)
 @import "~dpzvc-ui/dist/styles/components/button.css";
 @import "~dpzvc-ui/dist/styles/components/badge.css";
 ```
-3. 公共样式按需引入（可选）
+3. 公共样式按需引入（可选）建议全部加上
 ```bash
-@import "~dpzvc-ui/dist/styles/base/variables.css";
+@import "~dpzvc-ui/dist/styles/base/font.css";
+@import "~dpzvc-ui/dist/styles/base/variable.css";
 @import "~dpzvc-ui/dist/styles/base/reset.css";
-@import "~dpzvc-ui/dist/styles/utils/mixins.css";
+@import "~dpzvc-ui/dist/styles/utils/1px.css";
+@import "~dpzvc-ui/dist/styles/utils/animation.css";
+@import "~dpzvc-ui/dist/styles/utils/nowrap.css";
 ```
 注意：按需引入组件时，如果组件依赖变量或 mixin，需要保证 base / utils 样式已引入。
 
@@ -83,10 +86,10 @@ import Dpzvc from 'dpzvc-ui'
 Vue.use(Dpzvc)
 
 // 直接使用服务组件
-Vue.prototype.$Message.success('操作成功！')
-Vue.prototype.$Modal.alert('提示信息')
-Vue.prototype.$Prompt('请输入内容')
-Vue.prototype.$Indicator.show()   
+Vue.prototype.$Message.show('操作成功！')
+Vue.prototype.$Modal.confirm({body:'这是内容',onOk:function(){})
+Vue.prototype.$Prompt.info({title:'Prompt',spec:'ccc',text:'vvvv'})
+Vue.prototype.$Indicator.blade()
 
 ```
 
