@@ -23,7 +23,7 @@
       </div>
       <div :class="valueClass">
         <slot name="value">
-          <span v-text="value">说明</span>
+          <span v-text="value" />
         </slot>
       </div>
     </div>
