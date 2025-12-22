@@ -1,11 +1,11 @@
-const path = require('path');
-const { merge } = require('webpack-merge');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const baseConfig = require('./webpack.base.config.js');
+const path = require('path')
+const { merge } = require('webpack-merge')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const baseConfig = require('./webpack.base.config.js')
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'production'
 
 module.exports = merge(baseConfig, {
   mode: 'production',
@@ -17,7 +17,8 @@ module.exports = merge(baseConfig, {
     path: path.resolve(__dirname, 'dist-prod'),
     filename: '[name].[contenthash].js',
     chunkFilename: '[name].[contenthash].chunk.js',
-    publicPath: ''
+    publicPath: '',
+    clean: true
   },
   optimization: {
     minimize: true,
@@ -40,4 +41,4 @@ module.exports = merge(baseConfig, {
       }
     })
   ]
-});
+})

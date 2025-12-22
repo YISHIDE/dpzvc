@@ -1,9 +1,9 @@
-const path = require('path');
-const { merge } = require('webpack-merge');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const baseConfig = require('./webpack.base.config.js');
+const path = require('path')
+const { merge } = require('webpack-merge')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const baseConfig = require('./webpack.base.config.js')
 
 module.exports = merge(baseConfig, {
   mode: 'development',
@@ -15,7 +15,7 @@ module.exports = merge(baseConfig, {
     path: path.resolve(__dirname, 'dist-dev'),
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
-    publicPath: '/',
+    publicPath: '/'
   },
   devtool: 'eval-source-map',
   devServer: {
@@ -23,12 +23,19 @@ module.exports = merge(baseConfig, {
     compress: true,
     hot: true,
     historyApiFallback: true,
-    port: 3000
+    port: 3000,
+    client: {
+      overlay: {
+        warnings: false, // 不在浏览器上显示黄色警告
+        errors: true // 错误依然显示在浏览器上
+      }
+    }
+
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname,'src/template/index.ejs'),
+      template: path.resolve(__dirname, 'src/template/index.ejs'),
       inject: true,
       filename: 'index.html'
     }),
@@ -37,4 +44,4 @@ module.exports = merge(baseConfig, {
       chunkFilename: '[name].chunk.css'
     })
   ]
-});
+})

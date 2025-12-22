@@ -1,30 +1,38 @@
 <template>
-    <div class="Badge">
-        <Badge number="10">
-            <div class="item"></div>
-        </Badge>
+  <div class="Badge">
+    <Badge number="10">
+      <div class="item" />
+    </Badge>
 
-        <Badge number="100" max="99" :dot="false">
-            <div class="item"></div>
-        </Badge>
+    <Badge
+      number="100"
+      max="99"
+      :dot="false"
+    >
+      <div class="item" />
+    </Badge>
 
-        <Badge number="100" max="99" :dot="true">
-            <div class="item"></div>
-        </Badge>
-    </div>
+    <Badge
+      number="100"
+      max="99"
+      :dot="true"
+    >
+      <div class="item" />
+    </Badge>
+  </div>
 </template>
 
 <script>
 
-    export default {
-        name: "badge",
-        data(){
-            return {
-
-            }
-        },
+export default {
+  name: 'ViewBadge',
+  data () {
+    return {
 
     }
+  }
+
+}
 </script>
 
 <style lang="less" scoped>

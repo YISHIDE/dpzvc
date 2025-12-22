@@ -1,32 +1,36 @@
 <template>
-    <div class="Upload">
+  <div class="Upload">
+    <Upload
+      ref="upload"
+      :multiple="true"
+      @on-change-file="onChangeFile"
+    />
 
-        <Upload :multiple="true" @on-change-file="onChangeFile" ref="upload"></Upload>
-
-
-        <template v-if="files.length">
-
-            <img :src="item.base64" v-for="item in files"/>
-        </template>
-
-    </div>
+    <template v-if="files.length">
+      <img
+        v-for="(item,index) in files"
+        :key="index"
+        :src="item.base64"
+      >
+    </template>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "upload",
-        data(){
-            return {
-                files:[]
-            }
-        },
-        methods:{
-            onChangeFile(files){
-                this.files = files
-            }
-        }
-
+export default {
+  name: 'ViewUpload',
+  data () {
+    return {
+      files: []
     }
+  },
+  methods: {
+    onChangeFile (files) {
+      this.files = files
+    }
+  }
+
+}
 </script>
 
 <style lang="less" scoped>

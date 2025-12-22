@@ -3,48 +3,42 @@
  */
 import Prompt from './confirm'
 
-let promptInstance;
+let promptInstance
 
-function getPromptInstance(){
+function getPromptInstance () {
+  promptInstance = promptInstance || Prompt.newInstance({
 
-    promptInstance = promptInstance || Prompt.newInstance({
+    closable: true,
+    maskClosable: false,
+    footerHide: false
+  })
 
-            closable:true,
-            maskClosable:false,
-            footerHide:false
-        })
-
-    return promptInstance;
+  return promptInstance
 }
 
 function confirm (options) {
+  const instance = getPromptInstance()
 
-    let instance = getPromptInstance();
-
-    options.onRemove = function () {
-
-        promptInstance = null;
-    }
-    console.log(options)
-    instance.show(options);
+  options.onRemove = function () {
+    promptInstance = null
+  }
+  console.log(options)
+  instance.show(options)
 }
 
+Prompt.info = function (props = {}) {
+  props.showCancle = true
 
-Prompt.info = function (props = {})  {
-
-    props.showCancle = true;
-
-    return confirm(props);
+  return confirm(props)
 }
 
+Prompt.remove = function () {
+  if (!promptInstance) {
+    return false
+  }
 
-Prompt.remove = function (){
-    if(!promptInstance) {
-        return false;
-    }
-
-    const instance = getPromptInstance();
-    instance.remove();
+  const instance = getPromptInstance()
+  instance.remove()
 }
 
 export default Prompt

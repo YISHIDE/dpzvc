@@ -1,32 +1,36 @@
 <template>
-    <div class="dpzvc-spinner-snake" :style="spinnerStyle"></div>
+  <div
+    class="dpzvc-spinner-snake"
+    :style="spinnerStyle"
+  />
 </template>
 
 <script>
-    import props from '../props';
+import props from '../props'
 
-    export default {
-        mixins: [props],
-        computed: {
-            spinnerStyle() {
-                let style = {};
+export default {
+  name: 'DpzVcSnake',
+  mixins: [props],
+  computed: {
+    spinnerStyle () {
+      const style = {}
 
-                if (this.size) {
-                    let size = Math.ceil(this.size / 8);
+      if (this.size) {
+        const size = Math.ceil(this.size / 8)
 
-                    style.height = this.size + 'px';
-                    style.width = this.size + 'px';
-                    style.borderWidth = size + 'px';
-                }
+        style.height = this.size + 'px'
+        style.width = this.size + 'px'
+        style.borderWidth = size + 'px'
+      }
 
-                if (this.color) {
-                    style.borderTopColor = this.color;
-                    style.borderLeftColor = this.color;
-                    style.borderBottomColor = this.color;
-                }
+      if (this.color) {
+        style.borderTopColor = this.color
+        style.borderLeftColor = this.color
+        style.borderBottomColor = this.color
+      }
 
-                return style;
-            }
-        }
-    };
+      return style
+    }
+  }
+}
 </script>

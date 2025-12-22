@@ -1,6 +1,6 @@
-const path = require('path');
-const { VueLoaderPlugin } = require('vue-loader');
-
+const path = require('path')
+const { VueLoaderPlugin } = require('vue-loader')
+const ESLintPlugin = require('eslint-webpack-plugin')
 module.exports = {
   entry: {
     main: path.resolve(__dirname, 'src/main.js')
@@ -13,7 +13,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      vue$: 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, 'src')
     }
   },
@@ -75,7 +75,16 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new ESLintPlugin({
+      extensions: ['js', 'vue'],
+      emitWarning: true, // 输出警告，但不会阻止编译
+      emitError: true, // 输出错误
+      failOnWarning: false, // 不把警告当作错误
+      failOnError: true // 有错误直接阻止编译
+      // lintDirtyModulesOnly: true,
+      // overlay: false
+    })
   ],
   devtool: 'source-map'
-};
+}

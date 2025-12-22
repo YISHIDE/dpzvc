@@ -1,25 +1,29 @@
 <template>
-    <div class="ActionSheet">
-        <VButton width="50%" @click="visible = true"></VButton>
-        <ActionSheet :items="actionSheet" v-model="visible">
-
-        </ActionSheet>
-    </div>
+  <div class="ActionSheet">
+    <VButton
+      width="50%"
+      @click="visible = true"
+    />
+    <ActionSheet
+      v-model="visible"
+      :items="actionSheet"
+    />
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "action-sheet",
-        data(){
-            return {
-                visible:false,
-                actionSheet:[
-                    {text: '提交'},
-                    {text: '确定'},
-                ]
-            }
-        }
+export default {
+  name: 'ViewActionSheet',
+  data () {
+    return {
+      visible: false,
+      actionSheet: [
+        { text: '提交' },
+        { text: '确定' }
+      ]
     }
+  }
+}
 </script>
 
 <style lang="less" scoped>

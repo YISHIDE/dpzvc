@@ -1,23 +1,28 @@
 <template>
-    <div class="SwitchBar">
-        <SwitchBar v-model="checkLarge" size="large"></SwitchBar>
-        <span>large</span>
-        <SwitchBar v-model="checkSmall" size="small"></SwitchBar>
-        <span>small</span>
-
-    </div>
+  <div class="SwitchBar">
+    <SwitchBar
+      v-model="checkLarge"
+      size="large"
+    />
+    <span>large</span>
+    <SwitchBar
+      v-model="checkSmall"
+      size="small"
+    />
+    <span>small</span>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "switch-bar",
-        data(){
-            return {
-                checkLarge:false,
-                checkSmall:false
-            }
-        }
+export default {
+  name: 'ViewSwitchBar',
+  data () {
+    return {
+      checkLarge: false,
+      checkSmall: false
     }
+  }
+}
 </script>
 
 <style lang="less" scoped>

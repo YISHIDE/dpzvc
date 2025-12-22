@@ -1,24 +1,27 @@
 <template>
-    <div class="Rater">
-        <p>可点击评分</p>
-        <Rater v-model="rate"></Rater>
-        <span>{{rate}}</span>
-        <p>不可点击评分</p>
-        <Rater v-model="disabledRate" disabled></Rater>
-        <span>{{disabledRate}}</span>
-    </div>
+  <div class="Rater">
+    <p>可点击评分</p>
+    <Rater v-model="rate" />
+    <span>{{ rate }}</span>
+    <p>不可点击评分</p>
+    <Rater
+      v-model="disabledRate"
+      disabled
+    />
+    <span>{{ disabledRate }}</span>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "rater",
-        data(){
-            return {
-                rate:0,
-                disabledRate:4.5
-            }
-        }
+export default {
+  name: 'ViewRater',
+  data () {
+    return {
+      rate: 0,
+      disabledRate: 4.5
     }
+  }
+}
 </script>
 
 <style lang="less" scoped>

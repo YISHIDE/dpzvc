@@ -30,7 +30,7 @@ const routers = [
   { path: '/Tab', name: 'Tab', component: () => import(/* webpackChunkName: "tab" */ './views/Tab.vue'), meta: { title: 'Tab' } },
   { path: '/Text', name: 'Text', component: () => import(/* webpackChunkName: "text" */ './views/Text.vue'), meta: { title: 'Text' } },
   { path: '/ToTop', name: 'ToTop', component: () => import(/* webpackChunkName: "totop" */ './views/ToTop.vue'), meta: { title: 'ToTop' } },
-  { path: '/Upload', name: 'Upload', component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue'), meta: { title: 'Upload' } },
-];
+  { path: '/Upload', name: 'Upload', component: () => import(/* webpackChunkName: "upload" */ './views/Upload.vue'), meta: { title: 'Upload' } }
+]
 
-export default routers;
+export default routers

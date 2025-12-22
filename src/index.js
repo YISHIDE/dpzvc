@@ -6,7 +6,7 @@
 
 import VButton from './components/button'
 import CheckBox from './components/checkBox'
-import Header from './components/Header'
+import DpHeader from './components/header'
 import Message from './components/message'
 import Modal from './components/modal'
 import Picker from './components/picker'
@@ -39,7 +39,7 @@ const components = {
   CheckBoxGroup: CheckBox.group,
   Radio,
   RadioGroup: Radio.group,
-  DpHeader: Header,
+  DpHeader,
   Picker,
   Swipe,
   Tab,
@@ -118,7 +118,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   VButton,
   CheckBox,
-  Header,
+  DpHeader,
   Message,
   Modal,
   Prompt,

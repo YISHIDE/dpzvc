@@ -30,7 +30,7 @@ Prompt.newInstance = (properties = {}) => {
       message: '',
       validator: null,
       onOk: () => {},
-      onCancle: () => {},
+      onCancle: () => {}
     }
   })
 
@@ -52,7 +52,7 @@ Prompt.newInstance = (properties = {}) => {
     /**
      * 显示 Prompt
      */
-    show(props = {}) {
+    show (props = {}) {
       Object.keys(props).forEach(key => {
         instance[key] = props[key]
       })
@@ -62,7 +62,7 @@ Prompt.newInstance = (properties = {}) => {
     /**
      * 关闭 Prompt
      */
-    remove() {
+    remove () {
       instance.visible = false
       instance.buttonLoading = false
       destroy()

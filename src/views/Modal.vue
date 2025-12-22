@@ -1,24 +1,38 @@
 <template>
-    <div class="Modal">
-        <VButton width="50%" @click="showInfo">info</VButton>
-        <VButton width="50%" @click="showConfirm">confirm</VButton>
-    </div>
+  <div class="Modal">
+    <VButton
+      width="50%"
+      @click="showInfo"
+    >
+      info
+    </VButton>
+    <VButton
+      width="50%"
+      @click="showConfirm"
+    >
+      confirm
+    </VButton>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "modal",
-        methods:{
-            showInfo(){
-                this.$Modal.info({body:'这是内容',onOk:function(){EventBus.$Message.show({text:'点击了确定'})},onCancle:function () {
-                        EventBus.$Message.show({text:'点击了取消'})
-                    }})
-            },
-            showConfirm(){
-                this.$Modal.confirm({body:'这是内容',onOk:function(){EventBus.$Message.show({text:'点击了确定'})},})
-            }
+export default {
+  name: 'ViewModal',
+  methods: {
+    showInfo () {
+      this.$Modal.info({
+        body: '这是内容',
+        onOk: function () { this.$Message.show({ text: '点击了确定' }) },
+        onCancle: function () {
+          this.$Message.show({ text: '点击了取消' })
         }
+      })
+    },
+    showConfirm () {
+      this.$Modal.confirm({ body: '这是内容', onOk: function () { this.$Message.show({ text: '点击了确定' }) } })
     }
+  }
+}
 </script>
 
 <style lang="less" scoped>

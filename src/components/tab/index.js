@@ -3,4 +3,4 @@
  */
 import Tab from './tab.vue'
 
-export default  Tab
+export default Tab

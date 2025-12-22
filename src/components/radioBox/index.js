@@ -4,5 +4,5 @@
 import RadioBox from './radiobox.vue'
 import RadioBoxGroup from './radiobox-group.vue'
 
-RadioBox.group = RadioBoxGroup;
+RadioBox.group = RadioBoxGroup
 export default RadioBox

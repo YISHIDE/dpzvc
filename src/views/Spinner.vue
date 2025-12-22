@@ -1,13 +1,13 @@
 <template>
-    <div class="Spinner">
-       <Spinner />
-    </div>
+  <div class="Spinner">
+    <Spinner />
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "spinner"
-    }
+export default {
+  name: 'ViewSpinner'
+}
 </script>
 
 <style scoped>

@@ -1,13 +1,13 @@
 <template>
-    <div class="ToTop">
-        <ToTop></ToTop>
-    </div>
+  <div class="ToTop">
+    <ToTop />
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "to-top"
-    }
+export default {
+  name: 'ViewToTop'
+}
 </script>
 
 <style  lang="less" scoped>

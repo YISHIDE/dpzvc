@@ -1,56 +1,63 @@
 <template>
-    <div class="Indicator">
-        <div class="item">
-            <VButton @click="blade()">blade</VButton>
-        </div>
-        <div class="item">
-            <VButton @click="snake()">snake</VButton>
-        </div>
-        <div class="item">
-            <VButton @click="circle()">circle</VButton>
-        </div>
-        <div class="item">
-            <VButton @click="bounce()">bounce</VButton>
-        </div>
+  <div class="Indicator">
+    <div class="item">
+      <VButton @click="blade()">
+        blade
+      </VButton>
     </div>
+    <div class="item">
+      <VButton @click="snake()">
+        snake
+      </VButton>
+    </div>
+    <div class="item">
+      <VButton @click="circle()">
+        circle
+      </VButton>
+    </div>
+    <div class="item">
+      <VButton @click="bounce()">
+        bounce
+      </VButton>
+    </div>
+  </div>
 </template>
 
 <script>
 
-    export default {
-        name: "indicator",
-        methods:{
-            blade(){
-                 this.$Indicator.blade()
+export default {
+  name: 'ViewIndicator',
+  methods: {
+    blade () {
+      this.$Indicator.blade()
 
-                setTimeout(()=>{
-                    this.$Indicator.remove()
-                },3000)
+      setTimeout(() => {
+        this.$Indicator.remove()
+      }, 3000)
+    },
+    snake () {
+      this.$Indicator.snake()
 
-            },
-            snake(){
-                this.$Indicator.snake()
+      setTimeout(() => {
+        this.$Indicator.remove()
+      }, 3000)
+    },
+    circle () {
+      this.$Indicator.circle()
 
-                setTimeout(()=>{
-                    this.$Indicator.remove()
-                },3000)
-            },
-            circle(){
-                this.$Indicator.circle()
+      setTimeout(() => {
+        this.$Indicator.remove()
+      }, 3000)
+    },
+    bounce () {
+      this.$Indicator.bounce()
 
-                setTimeout(()=>{
-                    this.$Indicator.remove()
-                },3000)
-            },
-            bounce(){
-                this.$Indicator.bounce()
-
-                setTimeout(()=>{
-                    this.$Indicator.remove()
-                },3000)
-            }
-        }
+      setTimeout(() => {
+        this.$Indicator.remove()
+      }, 3000)
     }
+  }
+}
 </script>
 
 <style lang="less" scoped>

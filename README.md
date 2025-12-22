@@ -53,9 +53,8 @@ Vue.use(Dpzvc)
 ```bash
 import Vue from 'vue'
 import { VButton, Badge } from 'dpzvc-ui'
-
-Vue.component('VButton', VButton)
-Vue.component('Badge', Badge)
+Vue.use(VButton)
+Vue.use(Badge)
 ```
 
 2. 引入组件 CSS
@@ -88,14 +87,17 @@ dpzvc-ui 提供一些 服务组件，无需注册即可使用，如：
 ```bash
 import Vue from 'vue'
 import Dpzvc from 'dpzvc-ui'
+import { Message, Modal, Prompt, Indicator } from 'dpzvc-ui'
+Vue.use(Message)
+Vue.use(Modal)
+Vue.use(Prompt)
+Vue.use(Indicator)
 
-Vue.use(Dpzvc)
-
-// 直接使用服务组件
-Vue.prototype.$Message.show('操作成功！')
-Vue.prototype.$Modal.confirm({body:'这是内容',onOk:function(){})
-Vue.prototype.$Prompt.info({title:'Prompt',spec:'ccc',text:'vvvv'})
-Vue.prototype.$Indicator.blade()
+// 直接使用服务组件 this指向Vue实例
+this.$Message.show('操作成功！')
+this.$Modal.confirm({body:'这是内容',onOk:function(){})
+this.$Prompt.info({title:'Prompt',spec:'ccc',text:'vvvv'})
+this.$Indicator.blade()
 
 ```
 

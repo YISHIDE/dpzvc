@@ -1,95 +1,104 @@
 <template>
+  <div
+    v-show="show"
+    :class="classes"
+    :style="getStyles"
+  >
+    <ul>
+      <li
+        v-for="(item, index) in items"
+        :key="index"
+      >
+        <template v-if="/(http|https)/i.test(item.path)">
+          <a
+            :href="item.path"
+            :class="itemClass(item, index)"
+          >
+            <span v-html="getIconHtml(item, index)" />
+            <p>{{ item.name }}</p>
+          </a>
+        </template>
 
-        <div :class="classes" v-show="show" :style="getStyles">
-            <ul>
-                <li v-for="(item, index) in items" :key="index">
-                    <template v-if="/(http|https)/i.test(item.path)">
-                        <a :href="item.path" :class="itemClass(item, index)">
-                            <span v-html="getIconHtml(item, index)"></span>
-                            <p>{{item.name}}</p>
-                        </a>
-                    </template>
-
-                    <template v-else>
-                        <router-link tag="a" :to="item.path" :class="itemClass(item, index)">
-                            <slot name="item">
-                                <span v-html="getIconHtml(item, index)"></span>
-                                <p>{{item.name}}</p>
-                            </slot>
-                        </router-link>
-                    </template>
-                </li>
-
-            </ul>
-
-        </div>
-
-
-
+        <template v-else>
+          <router-link
+            tag="a"
+            :to="item.path"
+            :class="itemClass(item, index)"
+          >
+            <slot name="item">
+              <span v-html="getIconHtml(item, index)" />
+              <p>{{ item.name }}</p>
+            </slot>
+          </router-link>
+        </template>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-    const prefixCls = 'dpzvc-tab';
-    export default {
-        props: {
-            items: Array,
-            value: {
-                type: Boolean,
-                default: true
-            },
-            index: {
-                type: [Number, String],
-                default: 0
-            },
-            border: {
-                type: Boolean,
-                default: true
-            },
-            styles: {
-                type: Object,
-                default(){
-                    return {}
-                }
-            }
-        },
-        data(){
-            return {
-                show: this.value
-            }
-        },
-        computed: {
-            classes(){
-                return [
-                    `${prefixCls}`
-                ]
-            },
-            getStyles() {
-                return Object.assign({}, this.styles)
-            }
-        },
-        watch: {
-            value(val){
-                this.show = val
-            }
-        },
-        methods: {
-            itemClass(item, index) {
-                var _class = [
-                    'tab-item-' + index
-                ];
-
-                if (this.index == index) _class.push('cur');
-
-                return _class;
-            },
-            getIconHtml(item, index) {
-                if (this.index == index) {
-                    return item.iconCur || item.icon;
-                } else {
-                    return item.icon;
-                }
-            }
-        }
+const prefixCls = 'dpzvc-tab'
+export default {
+  name: 'DpzVcTab',
+  props: {
+    items: Array,
+    value: {
+      type: Boolean,
+      default: true
+    },
+    index: {
+      type: [Number, String],
+      default: 0
+    },
+    border: {
+      type: Boolean,
+      default: true
+    },
+    styles: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
+  },
+  data () {
+    return {
+      show: this.value
+    }
+  },
+  computed: {
+    classes () {
+      return [
+        `${prefixCls}`
+      ]
+    },
+    getStyles () {
+      return Object.assign({}, this.styles)
+    }
+  },
+  watch: {
+    value (val) {
+      this.show = val
+    }
+  },
+  methods: {
+    itemClass (item, index) {
+      const _class = [
+        'tab-item-' + index
+      ]
+
+      if (this.index === index) _class.push('cur')
+
+      return _class
+    },
+    getIconHtml (item, index) {
+      if (this.index === index) {
+        return item.iconCur || item.icon
+      } else {
+        return item.icon
+      }
+    }
+  }
+}
 
 </script>

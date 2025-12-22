@@ -1,63 +1,53 @@
 /**
  * Created by admin on 2017/3/30.
  */
-import  Modal from './confirm'
+import Modal from './confirm'
 
-let modalInstance;
+let modalInstance
 
-function getModalInstance(){
-    console.warn(modalInstance)
-    modalInstance = modalInstance || Modal.newInstance({
-            showHead:true,
-            closable:true,
-            maskClosable:false,
-            footerHide:false
-        });
+function getModalInstance () {
+  console.warn(modalInstance)
+  modalInstance = modalInstance || Modal.newInstance({
+    showHead: true,
+    closable: true,
+    maskClosable: false,
+    footerHide: false
+  })
 
-
-    return modalInstance
+  return modalInstance
 }
-
 
 function confirm (options) {
+  const instance = getModalInstance()
 
-    let instance = getModalInstance();
+  options.onRemove = function () {
+    modalInstance = null
+  }
 
-    options.onRemove = function (){
-        modalInstance = null;
-
-    }
-
-
-    instance.show(options)
+  instance.show(options)
 }
 
-
-Modal.info = function (props={}){
-
-    props.showCancle = true;
-    props.showHead = false;
-    return confirm(props)
+Modal.info = function (props = {}) {
+  props.showCancle = true
+  props.showHead = false
+  return confirm(props)
 }
 
-Modal.confirm = function (props={}) {
+Modal.confirm = function (props = {}) {
+  props.showCancle = false
+  props.showHead = false
 
-    props.showCancle = false;
-    props.showHead = false;
-
-    return confirm(props)
+  return confirm(props)
 }
 
-Modal.remove = function(){
+Modal.remove = function () {
+  if (!modalInstance) {
+    return false
+  }
 
-    if(!modalInstance){
-        return false;
-    }
+  const instance = getModalInstance()
 
-    const instance = getModalInstance();
+  instance.remove()
+}
 
-    instance.remove();
-};
-
-
-export default  Modal;
+export default Modal

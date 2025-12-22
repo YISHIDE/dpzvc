@@ -1,25 +1,30 @@
 <template>
-    <div class="Card">
-        <Card width="80%">
-            <span class="item" slot="header">头部</span>
-            <span class="item-main" >内容</span>
-            <span class="item" slot="footer">底部</span>
-
-        </Card>
-    </div>
+  <div class="Card">
+    <Card width="80%">
+      <span
+        slot="header"
+        class="item"
+      >头部</span>
+      <span class="item-main">内容</span>
+      <span
+        slot="footer"
+        class="item"
+      >底部</span>
+    </Card>
+  </div>
 </template>
 
 <script>
 
-    export default {
-        name: "card",
-        data(){
-            return {
-
-            }
-        },
+export default {
+  name: 'ViewCard',
+  data () {
+    return {
 
     }
+  }
+
+}
 </script>
 
 <style lang="less" scoped>

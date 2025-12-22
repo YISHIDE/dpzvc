@@ -1,24 +1,29 @@
 <template>
-    <div class="Prompt">
-        <VButton width="50%" @click="showPrompt">弹出Prompt</VButton>
-    </div>
+  <div class="Prompt">
+    <VButton
+      width="50%"
+      @click="showPrompt"
+    >
+      弹出Prompt
+    </VButton>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "prompt",
-        data(){
-            return {
-
-            }
-        },
-        methods:{
-            showPrompt(){
-                this.$Prompt.info({title:'Prompt',spec:'ccc',text:'vvvv'})
-            }
-        }
+export default {
+  name: 'ViewPrompt',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+    showPrompt () {
+      this.$Prompt.info({ title: 'Prompt', spec: 'ccc', text: 'vvvv' })
+    }
+  }
+
+}
 </script>
 
 <style lang="less" scoped>

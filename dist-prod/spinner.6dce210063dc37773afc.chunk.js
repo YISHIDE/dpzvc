@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkdpzvc_ui=self.webpackChunkdpzvc_ui||[]).push([[914],{2697(n,e,s){s.r(e),s.d(e,{default:()=>i});const c={name:"ViewSpinner"};const i=(0,s(4486).A)(c,function(){var n=this._self._c;return n("div",{staticClass:"Spinner"},[n("Spinner")],1)},[],!1,null,"35228c69",null).exports}}]);
+//# sourceMappingURL=spinner.6dce210063dc37773afc.chunk.js.map

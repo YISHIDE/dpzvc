@@ -7,7 +7,7 @@ import Indicator from './Indicator.vue'
 
 let instance = null
 
-function createInstance(props = {}) {
+function createInstance (props = {}) {
   const IndicatorConstructor = Vue.extend(Indicator)
 
   const vm = new IndicatorConstructor({
@@ -32,7 +32,7 @@ function createInstance(props = {}) {
   return vm
 }
 
-function destroyInstance() {
+function destroyInstance () {
   if (!instance) return
   instance.$destroy()
   if (instance.$el && instance.$el.parentNode) {
@@ -41,7 +41,7 @@ function destroyInstance() {
   instance = null
 }
 
-function open(options = {}) {
+function open (options = {}) {
   if (!instance) {
     instance = createInstance(options)
   }
@@ -53,7 +53,7 @@ function open(options = {}) {
   instance.visible = true
 }
 
-function close() {
+function close () {
   if (!instance) return
   instance.visible = false
   destroyInstance()
