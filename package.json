@@ -12,7 +12,7 @@
     "build:prod": "webpack --config webpack.dist.prod.config.js",
     "build": "npm run build:style && npm run build:dev && npm run build:prod",
     "dist": "webpack --progress --config webpack.prod.config.js",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -105,7 +105,7 @@
   },
   "lint-staged": {
     "*.{js,vue}": [
-      "eslint --max-warnings=Infinity"
+      "eslint --max-warnings=0"
     ]
   }
 }
