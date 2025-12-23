@@ -1,5 +1,5 @@
 /**
- * Created by admin on 2017/6/13.
+ * Created by yishide on 2025/9/13.
  */
 export default {
   props: {
