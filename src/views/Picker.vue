@@ -9,7 +9,7 @@
     <Picker
       v-model="DateVisible"
       type="DatePicker"
-      date-value="2018/1/1"
+      date-value="2025/12/25"
       @sure="pickerSure"
       @cancle="pickerCancle"
     />
