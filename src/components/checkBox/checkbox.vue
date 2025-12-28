@@ -2,23 +2,23 @@
   <label :class="classes">
     <span :class="wrapperClasses">
       <span :class="innerClasses" />
+      <!-- v-if="!isGroup" -->
       <input
-        v-if="!isGroup"
         type="checkbox"
         :disabled="disable"
         :checked="currentValue"
-        class="dpzvc-checkbox-input noselect "
+        class="dpzvc-checkbox-input noselect"
         @change="change"
       >
-      <input
+      <!-- <input
         v-else
         v-model="model"
         type="checkbox"
         :disabled="disable"
         :value="label"
-        class="dpzvc-checkbox-input noselect "
+        class="dpzvc-checkbox-input noselect"
         @change="change"
-      >
+      > -->
     </span>
     <slot v-if="show"><span ref="slot">{{ label }}</span></slot>
   </label>
@@ -96,6 +96,10 @@ export default {
       if (this.$refs.slot && this.$refs.slot.innerHtml === '') {
         this.show = false
       }
+    } else {
+      const arrData = this.parent.currentValue
+      const index = arrData.indexOf(this.label)
+      if (index !== -1) { this.currentValue = true }
     }
   },
   methods: {
@@ -105,7 +109,12 @@ export default {
       this.currentValue = checked
       this.$emit('input', checked)
       if (this.isGroup) {
-        this.parent.change(this.model)
+        const arrData = this.parent.currentValue
+        const index = arrData.indexOf(this.label)
+
+        if (checked && index === -1) arrData.push(this.label)
+        if (!checked && index > -1) arrData.splice(index, 1)
+        this.parent.change(arrData)
       } else {
         this.$emit('on-change', checked)
         this.dispatch('on-form-change', checked)

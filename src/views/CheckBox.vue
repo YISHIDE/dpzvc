@@ -38,7 +38,7 @@ export default {
   name: 'ViewCheckBox',
   data () {
     return {
-      data: [],
+      data: ['中国'],
       visible: true,
       checked: false
     }

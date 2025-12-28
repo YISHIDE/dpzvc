@@ -23,7 +23,7 @@ module.exports = merge(baseConfig, {
     compress: true,
     hot: true,
     historyApiFallback: true,
-    port: 3000,
+    port: 3001,
     client: {
       overlay: {
         warnings: false, // 不在浏览器上显示黄色警告

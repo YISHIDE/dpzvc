@@ -1,5 +1,10 @@
 <template>
-  <div :class="['dpzvc-checkBoxGroup',vertical?'dpzvc-checkBoxGroup-vertical':'']">
+  <div
+    :class="[
+      'dpzvc-checkBoxGroup',
+      vertical ? 'dpzvc-checkBoxGroup-vertical' : '',
+    ]"
+  >
     <slot />
   </div>
 </template>
@@ -43,6 +48,7 @@ export default {
   methods: {
     change (data) {
       this.currentValue = data
+      // alert(data)
       this.$emit('input', data)
       this.$emit('on-change', data)
       this.dispatch('on-form-change', data)
@@ -63,9 +69,9 @@ export default {
 </script>
 
 <style scoped>
-    .dpzvc-checkBoxGroup-vertical {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
+.dpzvc-checkBoxGroup-vertical {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 </style>
