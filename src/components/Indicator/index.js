@@ -50,12 +50,12 @@ function open (options = {}) {
     instance.$props[key] = options[key]
   })
 
-  instance.visible = true
+  instance.$props.value = true
 }
 
 function close () {
   if (!instance) return
-  instance.visible = false
+  instance.$props.value = false
   destroyInstance()
 }
 
