@@ -4,7 +4,7 @@
       :list="items"
       :flex="false"
       index="1"
-      :can-drag="false"
+      :can-drag="true"
       height="100%"
       scroll-height="50px"
       :is-fixed-header="true"

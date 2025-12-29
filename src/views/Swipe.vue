@@ -5,9 +5,9 @@
       :list="files"
     >
       <template slot-scope="props">
-        <div>
-          <img :src="props.item.image">
-        </div>
+        <!-- <div> -->
+        <img :src="props.item.image">
+        <!-- </div> -->
       </template>
     </Swipe>
   </div>
