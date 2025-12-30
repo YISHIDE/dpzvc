@@ -58,7 +58,7 @@
 </template>
 
 <script>
-
+import rafTimeout from '../../lib/lib'
 const prefixCls = 'dpzvc-swipe'
 export default {
   name: 'DpzVcSwipe',
@@ -356,7 +356,7 @@ export default {
       }, 0)
     },
     autoSlide () {
-      this.timer = setTimeout(() => {
+      this.timer = rafTimeout(() => {
         if (!this.dragging && this.autoSwipe) {
           this.translateX -= this.clientWidth
           if (++this.slideIndex > this.maxIndex) {
@@ -370,7 +370,8 @@ export default {
       )
     },
     clearTimer () {
-      if (this.timer) clearTimeout(this.timer)
+      // if (this.timer) clearTimeout(this.timer)
+      this.timer && this.timer()
       this.timer = null
     },
 
