@@ -1,6 +1,6 @@
 {
   "name": "dpzvc-ui",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Vue组件库",
   "main": "dist/dpzvc.js",
   "module": "dist/dpzvc.esm.js",
@@ -18,6 +18,11 @@
     "type": "git",
     "url": "https://github.com/yishide/dpzvc.git"
   },
+  "files":[
+    "dist",
+    "README.md",
+    "images"
+  ],
   "keywords": [
     "Vue",
     "Vue 2.7 Cli",
